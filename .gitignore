@@ -1,0 +1,33 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+publish/
+dist/
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+
+## Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## Installer output
+*.exe
+!installer.iss
+
+## Test files
+test_archive/
+test.zip
+screenshot_*.png

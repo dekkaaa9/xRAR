@@ -1,0 +1,323 @@
+﻿<Window x:Class="xRAR.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:xRAR"
+        mc:Ignorable="d"
+        Title="xRAR" Height="650" Width="1000"
+        MinHeight="400" MinWidth="600"
+        Background="#FF1A1A1A"
+        WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+
+        <!-- ==================== MENU BAR ==================== -->
+        <Menu DockPanel.Dock="Top" Style="{StaticResource WinRARMenu}" x:Name="MainMenu">
+            <MenuItem Header="File">
+                <MenuItem Header="_Open archive..." Click="MenuOpenArchive_Click" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="Open archive _in new window"/>
+                <Separator/>
+                <MenuItem Header="_Save archive as..."/>
+                <Separator/>
+                <MenuItem Header="E_xit" Click="MenuExit_Click" InputGestureText="Alt+F4"/>
+            </MenuItem>
+            <MenuItem Header="Commands">
+                <MenuItem Header="Add files to archive..." Click="ToolbarAdd_Click" InputGestureText="Alt+A"/>
+                <MenuItem Header="Extract files to specified folder..." Click="ToolbarExtractTo_Click" InputGestureText="Alt+E"/>
+                <MenuItem Header="Extract files" Click="ToolbarExtract_Click"/>
+                <MenuItem Header="Test archived files" Click="ToolbarTest_Click" InputGestureText="Alt+T"/>
+                <Separator/>
+                <MenuItem Header="View file" Click="ToolbarView_Click" InputGestureText="Alt+V"/>
+                <MenuItem Header="Delete files" Click="ToolbarDelete_Click" InputGestureText="Del"/>
+                <Separator/>
+                <MenuItem Header="Find files and archives..." Click="ToolbarFind_Click" InputGestureText="Alt+F"/>
+                <MenuItem Header="Wizard" Click="ToolbarWizard_Click" InputGestureText="Alt+W"/>
+                <Separator/>
+                <MenuItem Header="Archive information..." Click="ToolbarInfo_Click" InputGestureText="Alt+I"/>
+                <MenuItem Header="Repair archive" Click="ToolbarRepair_Click" InputGestureText="Alt+R"/>
+                <Separator/>
+                <MenuItem Header="Convert archive to SFX"/>
+                <MenuItem Header="Protect archive from damage" Click="ToolbarProtect_Click"/>
+                <MenuItem Header="Lock archive" Click="ToolbarLock_Click"/>
+                <MenuItem Header="Edit archive comment" Click="ToolbarComment_Click"/>
+                <Separator/>
+                <MenuItem Header="Scan archive for viruses" Click="ToolbarVirusScan_Click"/>
+            </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Convert archives..."/>
+                <Separator/>
+                <MenuItem Header="Find files and archives..." Click="ToolbarFind_Click"/>
+                <Separator/>
+                <MenuItem Header="Generate report"/>
+                <MenuItem Header="Benchmark"/>
+            </MenuItem>
+            <MenuItem Header="Favorites">
+                <MenuItem Header="(empty)"/>
+            </MenuItem>
+            <MenuItem Header="Options">
+                <MenuItem Header="Settings..." Click="MenuSettings_Click" InputGestureText="Ctrl+S"/>
+                <Separator/>
+                <MenuItem Header="Import settings from file..."/>
+                <MenuItem Header="Export settings to file..."/>
+                <Separator/>
+                <MenuItem Header="Folders..."/>
+                <MenuItem Header="File list columns..."/>
+                <Separator/>
+                <MenuItem Header="Work in background"/>
+                <MenuItem Header="Low priority"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Help topics" InputGestureText="F1"/>
+                <Separator/>
+                <MenuItem Header="About xRAR..." Click="MenuAbout_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- ==================== TOOLBAR ==================== -->
+        <ToolBarTray DockPanel.Dock="Top" Background="#FF2D2D30" IsLocked="True">
+            <ToolBar x:Name="MainToolbar" Height="Auto" Band="0" BandIndex="0"
+                     Loaded="MainToolbar_Loaded">
+
+                <!-- Add -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Add"
+                        ToolTip="Add files to archive (Alt+A)" Click="ToolbarAdd_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1005.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Extract To -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Extract To"
+                        ToolTip="Extract files to specified folder (Alt+E)" Click="ToolbarExtractTo_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1015.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Extract -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Extract"
+                        ToolTip="Extract files" Click="ToolbarExtract_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1013.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Test -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Test"
+                        ToolTip="Test archived files (Alt+T)" Click="ToolbarTest_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1025.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- View -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="View"
+                        ToolTip="View file (Alt+V)" Click="ToolbarView_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1035.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Delete -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Delete"
+                        ToolTip="Delete files (Del)" Click="ToolbarDelete_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1045.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Find -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Find"
+                        ToolTip="Find files and archives (Alt+F)" Click="ToolbarFind_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1055.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Wizard -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Wizard"
+                        ToolTip="Wizard (Alt+W)" Click="ToolbarWizard_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1065.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Info -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Info"
+                        ToolTip="Archive information (Alt+I)" Click="ToolbarInfo_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1075.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Repair -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Repair"
+                        ToolTip="Repair archive (Alt+R)" Click="ToolbarRepair_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1085.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Comment -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Comment"
+                        ToolTip="Add archive comment" Click="ToolbarComment_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1095.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Protect -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Protect"
+                        ToolTip="Protect archive from damage" Click="ToolbarProtect_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1105.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- VirusScan -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="VirusScan"
+                        ToolTip="Scan archive for viruses" Click="ToolbarVirusScan_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1115.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Convert -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Convert"
+                        ToolTip="Convert archive" Click="ToolbarConvert_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1125.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Lock -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Lock"
+                        ToolTip="Lock archive" Click="ToolbarLock_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1135.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Report -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Report"
+                        ToolTip="Generate report" Click="ToolbarReport_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1145.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Benchmark -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Benchmark"
+                        ToolTip="Benchmark" Click="ToolbarBenchmark_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1155.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Print -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Print"
+                        ToolTip="Print file list" Click="ToolbarPrint_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1165.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Exit -->
+                <Button Style="{StaticResource ToolbarButton}" Tag="Exit"
+                        ToolTip="Exit xRAR" Click="MenuExit_Click">
+                    <Image Source="/xRAR;component/Resources/Icons/icon_1175.png"
+                           Width="48" Height="36" Stretch="Uniform"/>
+                </Button>
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <!-- ==================== STATUS BAR ==================== -->
+        <Border DockPanel.Dock="Bottom" Background="#FF252526" Height="24"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
+            <TextBlock x:Name="StatusText" Text="Total 0 folders and 0 bytes in 0 files" FontSize="11"
+                       Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"
+                       HorizontalAlignment="Left" Margin="8,0,0,0"/>
+        </Border>
+
+        <!-- ==================== ADDRESS BAR ==================== -->
+        <DockPanel DockPanel.Dock="Top" Background="#FF252526" Height="30" LastChildFill="True">
+            <Button x:Name="BtnUp" Style="{StaticResource UpButton}" Click="BtnUp_Click"
+                    ToolTip="Up one level" Margin="4,0,2,0">
+                <TextBlock Text="&#xE74A;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                           Foreground="{StaticResource TextPrimary}" VerticalAlignment="Center"/>
+            </Button>
+            <ComboBox x:Name="AddressBar" Style="{StaticResource AddressCombo}"
+                      IsEditable="True" Margin="2,0,4,0"
+                      KeyDown="AddressBar_KeyDown"
+                      SelectionChanged="AddressBar_SelectionChanged"/>
+        </DockPanel>
+
+        <!-- ==================== FILE LIST ==================== -->
+        <ListView x:Name="FileListView" Style="{StaticResource FileListView}"
+                  MouseDoubleClick="FileListView_MouseDoubleClick"
+                  SelectionChanged="FileListView_SelectionChanged"
+                  AllowDrop="True"
+                  PreviewMouseLeftButtonDown="FileListView_PreviewMouseLeftButtonDown"
+                  DragEnter="FileListView_DragEnter"
+                  DragOver="FileListView_DragOver"
+                  DragLeave="FileListView_DragLeave"
+                  Drop="FileListView_Drop"
+                  PreviewMouseMove="FileListView_PreviewMouseMove"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Open" Click="CtxOpen_Click"/>
+                    <MenuItem Header="Extract To..." Click="ToolbarExtractTo_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Add to archive..." Click="ToolbarAdd_Click"/>
+                    <MenuItem Header="Delete" Click="ToolbarDelete_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Properties" Click="CtxProperties_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView x:Name="FileGridView">
+                    <!-- Name -->
+                    <GridViewColumn Header="Name" Width="320">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Icon}" Width="16" Height="16"
+                                           Stretch="Uniform" VerticalAlignment="Center"
+                                           Margin="0,0,4,0"/>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Size -->
+                    <GridViewColumn Header="Size" Width="110" DisplayMemberBinding="{Binding SizeDisplay}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SizeDisplay}" TextAlignment="Right" Padding="0,0,8,0"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Packed -->
+                    <GridViewColumn Header="Packed" Width="110" DisplayMemberBinding="{Binding PackedDisplay}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PackedDisplay}" TextAlignment="Right" Padding="0,0,8,0"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Type -->
+                    <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Type}"/>
+                    <!-- Modified -->
+                    <GridViewColumn Header="Modified" Width="140" DisplayMemberBinding="{Binding ModifiedDisplay}"/>
+                    <!-- Created -->
+                    <GridViewColumn Header="Created" Width="140" DisplayMemberBinding="{Binding CreatedDisplay}"/>
+                    <!-- Accessed -->
+                    <GridViewColumn Header="Accessed" Width="140" DisplayMemberBinding="{Binding AccessedDisplay}"/>
+                    <!-- Attributes -->
+                    <GridViewColumn Header="Attributes" Width="90" DisplayMemberBinding="{Binding Attributes}"/>
+                    <!-- Checksum (CRC32) -->
+                    <GridViewColumn Header="CRC32" Width="90" DisplayMemberBinding="{Binding Checksum}"/>
+                    <!-- Path -->
+                    <GridViewColumn Header="Path" Width="200" DisplayMemberBinding="{Binding Path}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </DockPanel>
+</Window>

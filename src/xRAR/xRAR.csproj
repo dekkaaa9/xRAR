@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Resources\Icons\icon_256.ico</ApplicationIcon>
+    <AssemblyName>xRAR</AssemblyName>
+    <RootNamespace>xRAR</RootNamespace>
+    <Version>7.01.0</Version>
+    <Product>xRAR</Product>
+    <Company>xRAR</Company>
+    <Description>xRAR - Archive Manager</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icons\*.png" />
+  </ItemGroup>
+
+</Project>

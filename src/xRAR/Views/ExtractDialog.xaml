@@ -1,0 +1,62 @@
+<Window x:Class="xRAR.Views.ExtractDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Extract path and options" Height="380" Width="480"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="#FF252526" UseLayoutRounding="True">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/DarkTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Destination -->
+        <Grid Grid.Row="0" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Destination:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <ComboBox x:Name="DestPath" Grid.Column="1" IsEditable="True" Height="24"
+                      Style="{StaticResource AddressCombo}"/>
+            <Button Grid.Column="2" Content="Browse..." Style="{StaticResource DialogButton}"
+                    Margin="8,0,0,0" Padding="8,3" Click="Browse_Click"/>
+        </Grid>
+
+        <!-- Options -->
+        <GroupBox Grid.Row="1" Header="Options" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,8">
+            <StackPanel Margin="4">
+                <RadioButton x:Name="RbOverwrite" Content="Overwrite existing files" IsChecked="True" GroupName="Overwrite"/>
+                <RadioButton x:Name="RbSkip" Content="Skip existing files" GroupName="Overwrite"/>
+                <RadioButton x:Name="RbRename" Content="Rename existing files" GroupName="Overwrite"/>
+                <Separator Margin="0,4"/>
+                <CheckBox x:Name="ChkKeepBroken" Content="Keep broken files"/>
+                <CheckBox x:Name="ChkExtractToSubfolder" Content="Extract to subfolder (archive name)"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Selected files info -->
+        <GroupBox Grid.Row="2" Header="Selected files" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,8">
+            <TextBlock x:Name="SelectedInfo" TextWrapping="Wrap" Margin="4" Foreground="{StaticResource TextSecondary}"/>
+        </GroupBox>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="OK" Style="{StaticResource DialogButton}" Click="Ok_Click" IsDefault="True"/>
+            <Button Content="Cancel" Style="{StaticResource DialogButton}" Margin="8,0,0,0" Click="Cancel_Click" IsCancel="True"/>
+            <Button Content="Help" Style="{StaticResource DialogButton}" Margin="8,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
